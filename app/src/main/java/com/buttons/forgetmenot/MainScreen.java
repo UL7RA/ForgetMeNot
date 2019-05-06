@@ -1,12 +1,13 @@
 package com.buttons.forgetmenot;
 
-import android.content.Context;
-import android.support.constraint.ConstraintLayout;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -18,35 +19,39 @@ public class MainScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-        ConstraintLayout cardSpace = (ConstraintLayout) findViewById(R.id.CLayout);
+        FloatingActionButton addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //start add activity
+                Intent intent = new Intent(getApplicationContext(),PlantAddScreen.class);
+                intent.putExtra("Type","Add");
+                startActivity(intent);
+                recreate();
+            }
+        });
 
         db = new DatabaseHelper(getApplicationContext());
         List<Plant> plantList = db.getAll();
-        Integer counter = 0;
 
+        LinearLayout cardSpace = (LinearLayout) findViewById(R.id.mainConstraint);
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        View myView = inflater.inflate(R.layout.Card, null,false);
-        cardSpace.addView(myView);
-
-
-        Context context = getApplicationContext();
-        CharSequence text = "Should have rendered!";
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-        /*
-        for (Plant plant:plantList) {
-            createCard(plant,cardSpace,counter);
-            counter++;
+        if(plantList.isEmpty())
+        {
+            TextView databaseEmptyText = new TextView(getApplicationContext());
+            databaseEmptyText.setText(getString(R.string.nothing));
+            databaseEmptyText.setTextSize(32);
+            cardSpace.addView(databaseEmptyText);
         }
-        */
-    }
+        else {
+            for (Plant plant : plantList) {
+                View currentCard = inflater.inflate(R.layout.card,null,false);
 
-    private void createCard(Plant currentPlant, ConstraintLayout space, Integer ct)
-    {
 
+
+                cardSpace.addView(currentCard);
+            }
+        }
     }
 }
