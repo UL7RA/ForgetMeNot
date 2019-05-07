@@ -1,5 +1,35 @@
 <resources>
     <string name="app_name">Forget Me Not!</string>
     <string name="plantName">Spatiphyllum</string>
-    <string name="nothing">Doesn\'t look like anything to me</string>
+    <string name="nothing">Doesn\'t look like anything to me, try adding a plant!</string>
+    <string name="genericPlantName">Plant name here</string>
+    <string name="genericPlantDate">Plant date here</string>
+    <string name="genericPlantWater">Plant watered here</string>
+    <string name="genericPlantFed">Plant fed here</string>
+    <string name="genericPlantDescription">Plant description here</string>
+    <string name="addButton">Add</string>
+    <string name="cancelButton">Cancel</string>
+    <string name="permissionText">\t Thanks for installing our app! \n For it to work properly, we need the following permissions: \n\n\t Read/Write - So we can access the photographs of your plants
+        \n\n\n\t Rejecting any of the permission requests terminates the app.
+    </string>
+    <string name="okButton">I understand</string>
+
+    <string-array name="intervals">
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>3 days</item>
+        <item>4 days</item>
+        <item>5 days</item>
+        <item>6 days</item>
+        <item>1 week</item>
+        <item>2 weeks</item>
+        <item>3 weeks</item>
+        <item>1 month</item>
+        <item>2 months</item>
+        <item>3 months</item>
+        <item>4 months</item>
+        <item>5 months</item>
+        <item>6 months</item>
+        <item>Custom</item>
+    </string-array>
 </resources>

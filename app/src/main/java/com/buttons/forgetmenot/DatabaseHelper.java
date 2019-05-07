@@ -24,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + table_name + "(" + key_id + " INTEGER PRIMARY KEY," +key_name +" TEXT,"+
+        String createTable = "CREATE TABLE " + table_name + "(" + key_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +key_name +" TEXT,"+
                 key_desc +" TEXT,"+key_planted +" TEXT,"+key_watered +" TEXT,"+key_fed +" TEXT,"+key_imageLoc +" TEXT,"
                 +key_feedInterval +" TEXT,"+key_waterInterval +" TEXT)";
         db.execSQL(createTable);
@@ -86,5 +86,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return plantList;
+    }
+
+    //WARNING
+    public void deleteAll()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + table_name);
     }
 }
