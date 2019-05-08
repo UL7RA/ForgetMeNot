@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Debug;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PlantAddScreen extends AppCompatActivity {
 
@@ -53,20 +56,14 @@ public class PlantAddScreen extends AppCompatActivity {
 
 
         //image button here
-        imageButton = (ImageButton) findViewById(R.id.imageButton);
+        imageButton = findViewById(R.id.imageButton);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                getIntent.setType("image/*");
-
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
-
-                Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-
-                startActivityForResult(chooserIntent, PICK_IMAGE);
+                Intent toPickPhoto = new Intent();
+                toPickPhoto.setType("image/*");
+                toPickPhoto.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(toPickPhoto, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
 
@@ -128,7 +125,7 @@ public class PlantAddScreen extends AppCompatActivity {
         });
 
         //water button here
-        water = (ImageButton) findViewById(R.id.waterButton);
+        water = findViewById(R.id.waterButton);
         water.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,22 +143,17 @@ public class PlantAddScreen extends AppCompatActivity {
             }
         });
     }
-    public static final int PICK_IMAGE = 1;
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        switch (requestCode) {
-            case PICK_IMAGE:{
-                //TODO: update image location
-                    Uri selectedImage = data.getData();
-                    imageButton.setImageURI(selectedImage);
-                    imageLoc = selectedImage.getLastPathSegment();
-                    imageLoc = imageLoc.replace("raw:","");
-                    break;
-                //recreate();
-            }
-            case RESULT_CANCELED : break;
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data!=null && data.getData()!=null) {
+            //TODO: update image location
+            Uri selectedImage = data.getData();
+            imageButton.setImageURI(selectedImage);
+            imageLoc = selectedImage.getLastPathSegment();
+            imageLoc = imageLoc.replace("raw:", "");
         }
     }
 }

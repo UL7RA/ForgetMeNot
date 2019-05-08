@@ -51,7 +51,8 @@ public class PermissionsScreen extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     finish();
                 } else {
-                    System.exit(0);
+                    moveTaskToBack(true);
+                    android.os.Process.killProcess(android.os.Process.myPid());
                 }
                 return;
             }

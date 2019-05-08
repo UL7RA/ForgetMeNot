@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlantAddScreen">
-
-    <ImageButton
+    tools:context=".PlantAddScreen"
+    android:background="@android:color/background_light">
+    <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/imageButton"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
-
+        android:src="@android:drawable/ic_menu_camera"
+        />
     <EditText
         android:id="@+id/inputPlantName"
         android:layout_width="0dp"
@@ -101,13 +102,11 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:hint="@string/genericPlantDescription"
         android:gravity="start"
         app:layout_constraintBottom_toTopOf="@+id/add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/waterIntervalSpin" />
 
@@ -148,7 +147,7 @@
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:src="@drawable/burger" />
 
     <ImageButton
@@ -160,7 +159,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        android:scaleType="centerInside"
+        android:scaleType="fitCenter"
         android:src="@drawable/water"/>
 
     <Spinner

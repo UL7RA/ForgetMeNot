@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainScreen"
-    android:background="@color/cardview_dark_background">
+    android:background="@android:color/background_light">
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
@@ -32,11 +32,10 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@android:drawable/ic_input_add"
-        android:tint="@color/colorPrimaryDark"
-        app:backgroundTint="#03F44336"
+        android:tint="#FFFDFD"
+        app:backgroundTint="#76E666"
+        android:scaleType="centerInside"
         app:backgroundTintMode="src_atop"
-        app:elevation="5dp"
-        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/design_default_color_primary" />
@@ -49,9 +48,10 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:clickable="true"
+        android:focusable="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/button3dot"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/scrollView2"
-        android:scaleType="fitCenter"
-        android:src="@drawable/button3dot" />
+        app:layout_constraintTop_toTopOf="@+id/scrollView2" />
 
 </android.support.constraint.ConstraintLayout>

@@ -38,7 +38,7 @@ public class MainScreen extends AppCompatActivity {
             // Permission is not granted
             //TODO: Send to permissions screen
             Intent sendToPermissions = new Intent(this,PermissionsScreen.class);
-            startActivityForResult(sendToPermissions,0);
+            startActivity(sendToPermissions);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
@@ -91,23 +91,26 @@ public class MainScreen extends AppCompatActivity {
             for (Plant plant : plantList) {
                 View currentCard = inflater.inflate(R.layout.card, null, false);
 
+                ImageView plantImg = currentCard.findViewById(R.id.plantPic);
                 File imageFile = new File(plant.getImageLocation());
                 if (imageFile.exists()) {
                     Bitmap img = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                    ImageView plantImg = currentCard.findViewById(R.id.plantPic);
                     //TODO: make image smaller, crashes app ?
                     plantImg.setImageBitmap(img);
-                } else {
-                    Log.d("HELP", "Can't find image!");
-                    Log.d("LOCATION", plant.getImageLocation());
                 }
-
                 TextView plantNameShow = (TextView) currentCard.findViewById(R.id.plantName);
                 plantNameShow.setText(plant.getPlantName());
                 TextView plantWaterShow = (TextView) currentCard.findViewById(R.id.lastWatered);
                 plantWaterShow.setText(plant.getLastWatered());
                 TextView plantFoodShow = (TextView) currentCard.findViewById(R.id.lastFed);
                 plantFoodShow.setText(plant.getLastFed());
+
+                if(plant == plantList.get(plantList.size()-1))
+                {
+                    ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                    params.bottomMargin = 16;
+                    currentCard.setLayoutParams(params);
+                }
 
                 cardSpace.addView(currentCard);
 
@@ -117,6 +120,7 @@ public class MainScreen extends AppCompatActivity {
                         //start detailed activity
                     }
                 });
+
             }
         }
         //end render
