@@ -12,6 +12,7 @@
     <string name="permissionText">\t Thanks for installing our app! \n For it to work properly, we need the following permissions: \n\n\t Read/Write - So we can access the photographs of your plants
         \n\n\n\t Rejecting any of the permission requests terminates the app.
     </string>
+    <string name="deleteAll">Delete all entries</string>
     <string name="okButton">I understand</string>
 
     <string-array name="intervals">

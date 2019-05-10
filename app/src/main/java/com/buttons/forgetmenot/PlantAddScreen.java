@@ -3,6 +3,8 @@ package com.buttons.forgetmenot;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Debug;
 import android.provider.MediaStore;
@@ -152,8 +154,21 @@ public class PlantAddScreen extends AppCompatActivity {
             //TODO: update image location
             Uri selectedImage = data.getData();
             imageButton.setImageURI(selectedImage);
-            imageLoc = selectedImage.getLastPathSegment();
-            imageLoc = imageLoc.replace("raw:", "");
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                imageButton.setImageBitmap(bitmap);
+                imageLoc = selectedImage.getLastPathSegment();
+                imageLoc = imageLoc.replace("raw:", "");
+            }
+            catch (Exception e)
+            {
+                Context context = getApplicationContext();
+                CharSequence text = "Something went wrong!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
         }
     }
 }

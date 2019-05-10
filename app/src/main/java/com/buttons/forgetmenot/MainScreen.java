@@ -1,6 +1,7 @@
 package com.buttons.forgetmenot;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,12 +17,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.io.File;
 import java.util.List;
@@ -43,7 +47,6 @@ public class MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         FloatingActionButton addButton = findViewById(R.id.addButton);
-        FloatingActionButton settingsButton = findViewById(R.id.settingsButton);
 
         //add button
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -55,16 +58,6 @@ public class MainScreen extends AppCompatActivity {
                 startActivityForResult(intent,0);
             }
         });
-        //settings button
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Delete all, debug
-                db.deleteAll();
-                recreate();
-            }
-        });
-
 
         //render screen
         db = new DatabaseHelper(getApplicationContext());
@@ -96,7 +89,7 @@ public class MainScreen extends AppCompatActivity {
                 if (imageFile.exists()) {
                     Bitmap img = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                     //TODO: make image smaller, crashes app ?
-                    plantImg.setImageBitmap(img);
+                    plantImg.setImageBitmap(Bitmap.createScaledBitmap(img,100,100,false));
                 }
                 TextView plantNameShow = (TextView) currentCard.findViewById(R.id.plantName);
                 plantNameShow.setText(plant.getPlantName());
@@ -125,9 +118,33 @@ public class MainScreen extends AppCompatActivity {
         }
         //end render
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.settings,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.delete_all:
+            {
+                db.deleteAll();
+                recreate();
+                return true;
+            }
+            default:
+            {
+                return super.onOptionsItemSelected(item);
+            }
+        }
+    }
+
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data){
         recreate();
     }
-
 }
