@@ -54,16 +54,16 @@ public class PlantAddScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_add_screen);
 
-        waterIntervalSpin = (Spinner) findViewById(R.id.waterIntervalSpin);
-        foodIntervalSpin = (Spinner) findViewById(R.id.feedIntervalSpin);
-        plantName = (TextView) findViewById(R.id.inputPlantName);
-        plantDescription = (TextView) findViewById(R.id.inputPlantDescription);
-        plantDate = (TextView) findViewById(R.id.plantingDate);
-        lastWatered = (TextView) findViewById(R.id.lastWatered);
-        lastFed = (TextView) findViewById(R.id.lastFed);
+        waterIntervalSpin = findViewById(R.id.waterIntervalSpin);
+        foodIntervalSpin = findViewById(R.id.feedIntervalSpin);
+        plantName = findViewById(R.id.inputPlantName);
+        plantDescription = findViewById(R.id.inputPlantDescription);
+        plantDate = findViewById(R.id.plantingDate);
+        lastWatered = findViewById(R.id.lastWatered);
+        lastFed = findViewById(R.id.lastFed);
         imageButton = findViewById(R.id.imageButton);
         checkbox = findViewById(R.id.favorite);
-        add = (Button) findViewById(R.id.add);
+        add = findViewById(R.id.add);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.intervals, R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -97,7 +97,7 @@ public class PlantAddScreen extends AppCompatActivity {
                 Bitmap img = BitmapFactory.decodeByteArray(image, 0, image.length);
                 imageButton.setImageBitmap(Bitmap.createScaledBitmap(img, (int) dipToPixels(this, 120), (int) dipToPixels(this, 120), false));
             }
-            
+
             String isFav = plantToEdit.getFavorite();
             if(isFav.equals("true"))
                 checkbox.setSelected(true);
@@ -288,7 +288,7 @@ public class PlantAddScreen extends AppCompatActivity {
         });
 
         //cancel button here
-        cancel = (Button) findViewById(R.id.Cancel);
+        cancel = findViewById(R.id.Cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
