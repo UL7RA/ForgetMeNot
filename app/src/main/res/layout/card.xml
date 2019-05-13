@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:cardBackgroundColor="@color/colorPrimary"
-        app:cardCornerRadius="2dp"
+        app:cardCornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +58,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:contentDescription="@string/waterIcon"
                 android:id="@+id/waterIcon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -76,19 +77,32 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:textColor="@android:color/white"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/genericPlantWater"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/waterIcon"
-                app:layout_constraintEnd_toEndOf="@+id/plantName"
-                app:layout_constraintStart_toEndOf="@+id/waterIcon"
-                app:layout_constraintTop_toTopOf="@+id/waterIcon" />
+                app:layout_constraintTop_toTopOf="@+id/waterIcon"
+                app:layout_constraintRight_toLeftOf="@id/waterIntervalDate"
+                app:layout_constraintLeft_toRightOf="@id/waterIcon"/>
+            <TextView
+                android:id="@+id/waterIntervalDate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:textColor="@android:color/white"
+                android:text="@string/genericPlantWater"
+                android:textSize="16sp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                app:layout_constraintBottom_toBottomOf="@id/waterIcon"
+                app:layout_constraintTop_toTopOf="@id/waterIcon"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <ImageView
+                android:contentDescription="@string/foodIcon"
                 android:id="@+id/foodIcon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
@@ -105,14 +119,27 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:gravity="center"
-                android:text="@string/genericPlantFed"
-                android:textSize="16sp"
                 android:textColor="@android:color/white"
+                android:gravity="start"
+                android:text="@string/genericPlantWater"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/foodIcon"
-                app:layout_constraintEnd_toEndOf="@+id/lastWatered"
-                app:layout_constraintStart_toEndOf="@+id/foodIcon"
-                app:layout_constraintTop_toTopOf="@+id/foodIcon" />
+                app:layout_constraintTop_toTopOf="@+id/foodIcon"
+                app:layout_constraintRight_toLeftOf="@id/foodIntervalDate"
+                app:layout_constraintLeft_toRightOf="@id/foodIcon"/>
+            <TextView
+                android:id="@+id/foodIntervalDate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:textColor="@android:color/white"
+                android:text="@string/genericPlantFed"
+                android:gravity="end"
+                android:textSize="16sp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/foodIcon"
+                app:layout_constraintTop_toTopOf="@id/foodIcon"
+                app:layout_constraintRight_toRightOf="parent"/>
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

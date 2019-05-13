@@ -14,6 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,6 +35,9 @@ import java.util.List;
 public class MainScreen extends AppCompatActivity {
 
     DatabaseHelper db;
+    static CardClick listener;
+    private static List<Plant> plantList;
+    CardAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,23 +57,21 @@ public class MainScreen extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //start add activity
                 Intent intent = new Intent(getApplicationContext(),PlantAddScreen.class);
-                //intent.putExtra("Type","Add");
-                startActivityForResult(intent,0);
+                startActivityForResult(intent,ADD_NEW);
             }
         });
 
         //render screen
         db = new DatabaseHelper(getApplicationContext());
-        List<Plant> plantList = db.getAll();
+        plantList = db.getAll();
 
-        LinearLayout cardSpace = (LinearLayout) findViewById(R.id.mainConstraint);
-        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        //TODO: change to RecyclerView
 
         if(plantList.isEmpty())
         {
             //empty database
+            ConstraintLayout mainLayout = findViewById(R.id.mainLayout);
             TextView databaseEmptyText = new TextView(getApplicationContext());
             databaseEmptyText.setText(getString(R.string.nothing));
             databaseEmptyText.setTextSize(32);
@@ -76,45 +79,18 @@ public class MainScreen extends AppCompatActivity {
             ConstraintLayout.LayoutParams emptyTextParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.MATCH_PARENT);
             emptyTextParams.setMargins(32,128,32,128);
             databaseEmptyText.setLayoutParams(emptyTextParams);
-            databaseEmptyText.setTextColor(Color.WHITE);
-            cardSpace.addView(databaseEmptyText);
+            databaseEmptyText.setTextColor(Color.BLACK);
+            mainLayout.addView(databaseEmptyText);
         }
         else {
             //not empty
-            for (Plant plant : plantList) {
-                View currentCard = inflater.inflate(R.layout.card, null, false);
-
-                ImageView plantImg = currentCard.findViewById(R.id.plantPic);
-                File imageFile = new File(plant.getImageLocation());
-                if (imageFile.exists()) {
-                    Bitmap img = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                    //TODO: make image smaller, crashes app ?
-                    plantImg.setImageBitmap(Bitmap.createScaledBitmap(img,100,100,false));
-                }
-                TextView plantNameShow = (TextView) currentCard.findViewById(R.id.plantName);
-                plantNameShow.setText(plant.getPlantName());
-                TextView plantWaterShow = (TextView) currentCard.findViewById(R.id.lastWatered);
-                plantWaterShow.setText(plant.getLastWatered());
-                TextView plantFoodShow = (TextView) currentCard.findViewById(R.id.lastFed);
-                plantFoodShow.setText(plant.getLastFed());
-
-                if(plant == plantList.get(plantList.size()-1))
-                {
-                    ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                    params.bottomMargin = 16;
-                    currentCard.setLayoutParams(params);
-                }
-
-                cardSpace.addView(currentCard);
-
-                currentCard.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //start detailed activity
-                    }
-                });
-
-            }
+            RecyclerView recycler = findViewById(R.id.recycler);
+            recycler.setHasFixedSize(true);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+            recycler.setLayoutManager(layoutManager);
+            listener = new CardClick(this);
+            adapter = new CardAdapter(plantList);
+            recycler.setAdapter(adapter);
         }
         //end render
     }
@@ -143,8 +119,28 @@ public class MainScreen extends AppCompatActivity {
         }
     }
 
+    private static final int ADD_NEW = 0;
+    private static final int EDIT = 1;
+
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data){
-        recreate();
+        if(resultCode == RESULT_OK)
+            recreate();
+    }
+
+    private static class CardClick implements View.OnClickListener{
+        private final Context context;
+
+        private CardClick(Context context)
+        {
+            this.context=context;
+        }
+
+        public void onClick(View v)
+        {
+            //TODO: add card stuff to do here
+            Log.d("URGENT","This works");
+
+        }
     }
 }

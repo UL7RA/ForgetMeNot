@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".PermissionsScreen" />
-        <activity android:name=".EditPlant" />
         <activity android:name=".PlantAddScreen" />
         <activity android:name=".MainScreen">
             <intent-filter>

@@ -18,15 +18,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String key_planted = "Planted";
     private static final String key_watered = "LastWatered";
     private static final String key_fed = "LastFed";
-    private static final String key_imageLoc = "ImageLoc";
+    private static final String key_image = "ImageLoc";
     private static final String key_feedInterval = "FeedInterval";
     private static final String key_waterInterval = "WaterInterval";
+    private static final String key_favorite = "IsFavorite";
+    private static final String key_waterHistory = "WaterHistory";
+    private static final String key_foodHistory = "FoodHistory";
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + table_name + "(" + key_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +key_name +" TEXT,"+
-                key_desc +" TEXT,"+key_planted +" TEXT,"+key_watered +" TEXT,"+key_fed +" TEXT,"+key_imageLoc +" TEXT,"
-                +key_feedInterval +" TEXT,"+key_waterInterval +" TEXT)";
+                key_desc +" TEXT,"+key_planted +" TEXT,"+key_watered +" TEXT,"+key_fed +" TEXT,"+key_image +" BLOB,"
+                +key_feedInterval +" TEXT,"+key_waterInterval +" TEXT,"+ key_favorite +" TEXT,"+ key_waterHistory +" TEXT," +key_foodHistory +" TEXT"+   ")";
         db.execSQL(createTable);
     }
 
@@ -51,25 +54,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         content.put(key_planted,plant.getPlantDate());
         content.put(key_watered,plant.getLastWatered());
         content.put(key_fed,plant.getLastFed());
-        content.put(key_imageLoc,plant.getImageLocation());
+        content.put(key_image,plant.getImage());
         content.put(key_feedInterval,plant.getFeedInterval());
         content.put(key_waterInterval,plant.getWaterInterval());
+        content.put(key_favorite,plant.getFavorite());
+        content.put(key_waterHistory,plant.getWaterHistory());
+        content.put(key_foodHistory,plant.getFoodHistory());
 
         db.insert(table_name,null,content);
         db.close();
     }
 
-    public Plant findOne(Integer id)
+    public Plant findOne(String plantName)
     {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(table_name,new String[]{key_name,key_desc,key_planted,key_watered,key_fed,key_imageLoc,key_feedInterval,key_waterInterval},key_id+"=?",new String[]{String.valueOf(id)}, null, null, null);
+        //Cursor cursor = db.query(table_name,new String[]{key_name,key_desc,key_planted,key_watered,key_fed,key_imageLoc,key_feedInterval,key_waterInterval},key_id+"=?",new String[]{String.valueOf(id)}, null, null, null);
+        Cursor cursor  = db.rawQuery("SELECT * FROM "+ table_name +" WHERE "+key_name +"=?",new String[]{plantName+""});
         if(cursor!=null)
         {
             cursor.moveToFirst();
         }
         cursor.close();
         db.close();
-        return new Plant(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
+        return new Plant(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
     }
 
     public List<Plant> getAll()
@@ -80,11 +87,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                Plant currentPlant = new Plant(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
+                Plant currentPlant = new Plant(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
                 plantList.add(currentPlant);
                 cursor.moveToNext();
             }
         }
+        cursor.close();
         return plantList;
     }
 

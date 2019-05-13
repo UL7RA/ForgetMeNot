@@ -9,13 +9,15 @@ public class Plant {
     private String lastWatered;
     private String lastFed;
     private String description;
-    private String imageLocation;
+    private byte[] image;
     private String feedInterval;
     private String waterInterval;
 
-    public Plant(){}
+    private String favorite;
+    private String waterHistory;
+    private String foodHistory;
 
-    public Plant(int ID,String plantName,String description,String plantDate,String lastWatered,String lastFed,String imageLocation, String feedInterval, String waterInterval)
+    public Plant(int ID,String plantName,String description,String plantDate,String lastWatered,String lastFed,byte[] image, String feedInterval, String waterInterval,String favorite, String waterHistory, String foodHistory)
     {
         this.ID=ID;
         this.plantDate=plantDate;
@@ -23,21 +25,26 @@ public class Plant {
         this.lastFed=lastFed;
         this.lastWatered=lastWatered;
         this.description=description;
-        this.imageLocation=imageLocation;
+        this.image=image;
         this.feedInterval=feedInterval;
         this.waterInterval=waterInterval;
+        this.favorite=favorite;
+        this.waterHistory=waterHistory;
+        this.foodHistory=foodHistory;
     }
-
-    public Plant(String plantName,String plantDate,String lastWatered,String lastFed,String description,String imageLocation, String feedInterval, String waterInterval)
+    public Plant(String plantName,String description,String plantDate,String lastWatered,String lastFed,byte[] image, String feedInterval, String waterInterval,String favorite, String waterHistory, String foodHistory)
     {
         this.plantDate=plantDate;
         this.plantName=plantName;
         this.lastFed=lastFed;
         this.lastWatered=lastWatered;
         this.description=description;
-        this.imageLocation=imageLocation;
+        this.image=image;
         this.feedInterval=feedInterval;
         this.waterInterval=waterInterval;
+        this.favorite=favorite;
+        this.waterHistory=waterHistory;
+        this.foodHistory=foodHistory;
     }
 
     public String getPlantName()
@@ -90,14 +97,14 @@ public class Plant {
         this.description=description;
     }
 
-    public String getImageLocation()
+    public byte[] getImage()
     {
-        return imageLocation;
+        return image;
     }
 
-    public void setImageLocation(String imageLocation)
+    public void setImage(String imagePath)
     {
-        this.imageLocation=imageLocation;
+        this.image=image;
     }
 
     public String getFeedInterval()
@@ -118,5 +125,32 @@ public class Plant {
     public void setWaterInterval(String waterInterval)
     {
         this.waterInterval=waterInterval;
+    }
+
+    public String getFavorite()
+    {
+        return favorite;
+    }
+
+    public void setFavorite(String favorite)
+    {
+        this.favorite=favorite;
+    }
+
+    public String getFoodHistory() {
+        return foodHistory;
+    }
+
+    public void setFoodHistory(String foodToAdd)
+    {
+        foodHistory += ","+foodToAdd;
+    }
+
+    public String getWaterHistory() {
+        return waterHistory;
+    }
+
+    public void setWaterHistory(String waterToAdd) {
+        waterHistory += ","+waterToAdd;
     }
 }

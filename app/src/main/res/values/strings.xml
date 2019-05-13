@@ -2,18 +2,25 @@
     <string name="app_name">Forget Me Not!</string>
     <string name="plantName">Spatiphyllum</string>
     <string name="nothing">Doesn\'t look like anything to me, try adding a plant!</string>
-    <string name="genericPlantName">Plant name here</string>
-    <string name="genericPlantDate">Plant date here</string>
-    <string name="genericPlantWater">Plant watered here</string>
-    <string name="genericPlantFed">Plant fed here</string>
-    <string name="genericPlantDescription">Plant description here</string>
+    <string name="genericPlantName">Plant name</string>
+    <string name="genericPlantDate">Planting date</string>
+    <string name="genericPlantWater">Last watered</string>
+    <string name="genericPlantFed">Last fed</string>
+    <string name="genericPlantDescription">Notes</string>
     <string name="addButton">Add</string>
     <string name="cancelButton">Cancel</string>
+    <string name="okButtonCalendar">OK</string>
     <string name="permissionText">\t Thanks for installing our app! \n For it to work properly, we need the following permissions: \n\n\t Read/Write - So we can access the photographs of your plants
         \n\n\n\t Rejecting any of the permission requests terminates the app.
     </string>
+    <string name="waterInterval">Watering interval</string>
+    <string name="feedingInterval">Feeding interval</string>
     <string name="deleteAll">Delete all entries</string>
     <string name="okButton">I understand</string>
+    <string name="favorite">Favorite?</string>
+    <string name="inputPlantName">Input plant name</string>
+    <string name="foodIcon">Food icon</string>
+    <string name="waterIcon">Water icon</string>
 
     <string-array name="intervals">
         <item>1 day</item>

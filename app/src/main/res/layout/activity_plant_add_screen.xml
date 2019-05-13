@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlantAddScreen"
-    android:background="@android:color/background_light">
+    android:background="@android:color/background_light"
+    tools:context=".PlantAddScreen">
+
     <android.support.v7.widget.AppCompatImageButton
         android:id="@+id/imageButton"
         android:layout_width="120dp"
@@ -14,22 +15,23 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:scaleType="centerInside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:src="@android:drawable/ic_menu_camera"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/inputPlantName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:autofillHints="@string/inputPlantName"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/genericPlantName"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
@@ -39,17 +41,20 @@
         android:id="@+id/plantingDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:autofillHints="@string/genericPlantDate"
+        android:clickable="false"
+        android:focusable="false"
+        android:longClickable="false"
         android:ems="10"
         android:hint="@string/genericPlantDate"
-        android:inputType="datetime"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/favorite"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
         app:layout_constraintTop_toBottomOf="@+id/inputPlantName" />
 
@@ -57,17 +62,21 @@
         android:id="@+id/lastWatered"
         android:layout_width="0dp"
         android:layout_height="46dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:autofillHints="@string/genericPlantWater"
+        android:clickable="false"
+        android:longClickable="false"
         android:ems="10"
+        android:focusable="false"
         android:hint="@string/genericPlantWater"
-        android:inputType="datetime"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toEndOf="@+id/waterButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintEnd_toStartOf="@+id/lastFed"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waterIntervalSpin" />
 
     <EditText
         android:id="@+id/lastFed"
@@ -75,22 +84,19 @@
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:autofillHints="@string/genericPlantFed"
+        android:clickable="false"
+        android:longClickable="false"
         android:ems="10"
+        android:focusable="false"
         android:hint="@string/genericPlantFed"
-        android:inputType="datetime"
-        app:layout_constraintEnd_toStartOf="@+id/foodButton"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="210dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/lastWatered"
+        app:layout_constraintTop_toBottomOf="@+id/feedIntervalSpin" />
 
     <EditText
         android:id="@+id/inputPlantDescription"
@@ -98,17 +104,18 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:inputType="textMultiLine"
-        android:hint="@string/genericPlantDescription"
+        android:autofillHints="@string/genericPlantDescription"
         android:gravity="start"
+        android:hint="@string/genericPlantDescription"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/waterIntervalSpin" />
+        app:layout_constraintTop_toBottomOf="@+id/lastWatered" />
 
     <Button
         android:id="@+id/add"
@@ -121,7 +128,8 @@
         android:layout_marginBottom="16dp"
         android:text="@string/addButton"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/Cancel"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -136,44 +144,48 @@
         android:text="@android:string/cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/add" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/foodButton"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:contentDescription="@string/foodIcon"
+        android:scaleType="centerInside"
+        android:src="@drawable/burger"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        android:scaleType="fitCenter"
-        android:src="@drawable/burger" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/waterButton"
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/waterIcon"
+        android:scaleType="centerInside"
+        android:src="@drawable/water"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        android:scaleType="fitCenter"
-        android:src="@drawable/water"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <Spinner
         android:id="@+id/waterIntervalSpin"
         android:layout_width="0dp"
         android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastWatered" />
+        app:layout_constraintEnd_toStartOf="@+id/feedIntervalSpin"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/waterButton"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <Spinner
         android:id="@+id/feedIntervalSpin"
@@ -181,11 +193,25 @@
         android:layout_height="46dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/foodButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/waterIntervalSpin"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
+    <CheckBox
+        android:id="@+id/favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/favorite"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/lastFed" />
+        app:layout_constraintTop_toBottomOf="@+id/inputPlantName" />
 
 </android.support.constraint.ConstraintLayout>
