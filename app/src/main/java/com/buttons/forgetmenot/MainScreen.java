@@ -44,29 +44,15 @@ public class MainScreen extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-            //TODO: Send to permissions screen
             Intent sendToPermissions = new Intent(this,PermissionsScreen.class);
             startActivity(sendToPermissions);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        FloatingActionButton addButton = findViewById(R.id.addButton);
-
-        //add button
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),PlantAddScreen.class);
-                startActivityForResult(intent,ADD_NEW);
-            }
-        });
 
         //render screen
         db = new DatabaseHelper(getApplicationContext());
         plantList = db.getAll();
-
-        //TODO: change to RecyclerView
 
         if(plantList.isEmpty())
         {
@@ -85,10 +71,10 @@ public class MainScreen extends AppCompatActivity {
         else {
             //not empty
             RecyclerView recycler = findViewById(R.id.recycler);
-            recycler.setHasFixedSize(true);
+            recycler.setHasFixedSize(false);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
             recycler.setLayoutManager(layoutManager);
-            listener = new CardClick(this);
+            listener = new CardClick();
             adapter = new CardAdapter(plantList);
             recycler.setAdapter(adapter);
         }
@@ -98,6 +84,7 @@ public class MainScreen extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.settings,menu);
+        //getMenuInflater().inflate(R.);
         return true;
     }
 
@@ -110,6 +97,12 @@ public class MainScreen extends AppCompatActivity {
             {
                 db.deleteAll();
                 recreate();
+                return true;
+            }
+            case R.id.action_add:
+            {
+                Intent intent = new Intent(getApplicationContext(),PlantAddScreen.class);
+                startActivityForResult(intent,ADD_NEW);
                 return true;
             }
             default:
@@ -128,19 +121,15 @@ public class MainScreen extends AppCompatActivity {
             recreate();
     }
 
-    private static class CardClick implements View.OnClickListener{
-        private final Context context;
-
-        private CardClick(Context context)
-        {
-            this.context=context;
-        }
+    private class CardClick implements View.OnClickListener{
 
         public void onClick(View v)
         {
             //TODO: add card stuff to do here
-            Log.d("URGENT","This works");
-
+            Intent intent = new Intent(getApplicationContext(),PlantAddScreen.class);
+            TextView tw = v.findViewById(R.id.plantName);
+            intent.putExtra("edit",tw.getText());
+            startActivityForResult(intent,EDIT);
         }
     }
 }

@@ -47,6 +47,10 @@ public class Plant {
         this.foodHistory=foodHistory;
     }
 
+    public int getID() {
+        return ID;
+    }
+
     public String getPlantName()
     {
         return plantName;

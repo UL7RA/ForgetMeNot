@@ -2,9 +2,11 @@ package com.buttons.forgetmenot;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,18 +67,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void update(Plant plant)
+    {
+        SQLiteDatabase db =this.getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put(key_name,plant.getPlantName());
+        content.put(key_desc,plant.getDescription());
+        content.put(key_planted,plant.getPlantDate());
+        content.put(key_watered,plant.getLastWatered());
+        content.put(key_fed,plant.getLastFed());
+        content.put(key_image,plant.getImage());
+        content.put(key_feedInterval,plant.getFeedInterval());
+        content.put(key_waterInterval,plant.getWaterInterval());
+        content.put(key_favorite,plant.getFavorite());
+        content.put(key_waterHistory,plant.getWaterHistory());
+        content.put(key_foodHistory,plant.getFoodHistory());
+        db.update(table_name,content,key_id+"="+plant.getID(),null);
+        db.close();
+    }
+
     public Plant findOne(String plantName)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         //Cursor cursor = db.query(table_name,new String[]{key_name,key_desc,key_planted,key_watered,key_fed,key_imageLoc,key_feedInterval,key_waterInterval},key_id+"=?",new String[]{String.valueOf(id)}, null, null, null);
-        Cursor cursor  = db.rawQuery("SELECT * FROM "+ table_name +" WHERE "+key_name +"=?",new String[]{plantName+""});
-        if(cursor!=null)
-        {
-            cursor.moveToFirst();
-        }
+        String query = "SELECT * FROM "+table_name+" WHERE "+key_name+"=?";
+        String[] args = {plantName};
+        Cursor cursor = db.rawQuery(query,args);
+        cursor.moveToFirst();
+        Plant toReturn = new Plant(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
         cursor.close();
         db.close();
-        return new Plant(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
+        return toReturn;
     }
 
     public List<Plant> getAll()
@@ -87,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                Plant currentPlant = new Plant(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
+                Plant currentPlant = new Plant(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
                 plantList.add(currentPlant);
                 cursor.moveToNext();
             }

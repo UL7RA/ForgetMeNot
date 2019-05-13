@@ -46,7 +46,8 @@ public class PlantAddScreen extends AppCompatActivity {
     byte[] image;
     Spinner waterIntervalSpin, foodIntervalSpin;
     CheckBox checkbox;
-    int dateWriteSelector;
+    int dateWriteSelector,editPlantID;
+    Boolean isEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class PlantAddScreen extends AppCompatActivity {
         lastFed = (TextView) findViewById(R.id.lastFed);
         imageButton = findViewById(R.id.imageButton);
         checkbox = findViewById(R.id.favorite);
+        add = (Button) findViewById(R.id.add);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.intervals, R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -69,7 +71,7 @@ public class PlantAddScreen extends AppCompatActivity {
         waterIntervalSpin.setAdapter(adapter);
         foodIntervalSpin.setAdapter(adapter);
 
-        Plant plantToEdit;
+        final Plant plantToEdit;
 
         Intent lastIntent = getIntent();
         if(lastIntent.getExtras()!=null)
@@ -90,14 +92,22 @@ public class PlantAddScreen extends AppCompatActivity {
             lastFed.setText(plantToEdit.getLastFed());
             plantDate.setText(plantToEdit.getPlantDate());
 
-            //TODO: change image handling
-            //byte[] imgByte = plantToEdit.getImage();
-            //Bitmap img = BitmapFactory.decodeByteArray(imgByte,0,imgByte.length);
-            //TODO: make image smaller, crashes app ?
-            //imageButton.setImageBitmap(Bitmap.createScaledBitmap(img,120,120,false));
+            image = plantToEdit.getImage();
+            Bitmap img = BitmapFactory.decodeByteArray(image,0,image.length);
+            imageButton.setImageBitmap(Bitmap.createScaledBitmap(img,(int)dipToPixels(this,120),(int)dipToPixels(this,120),false));
 
+            String isFav = plantToEdit.getFavorite();
+            if(isFav.equals("true"))
+                checkbox.setSelected(true);
+            else
+                checkbox.setSelected(false);
+
+            add.setText(R.string.save);
+            isEdit=true;
+            editPlantID = plantToEdit.getID();
         }
-
+        else
+            isEdit=false;
         //Dates
         final Calendar myCalendar = Calendar.getInstance();
 
@@ -167,6 +177,7 @@ public class PlantAddScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean checked = ((CheckBox) v).isChecked();
+
                 if(v.getId() == R.id.favorite)
                 {
                     if(checked)
@@ -179,15 +190,20 @@ public class PlantAddScreen extends AppCompatActivity {
         });
 
         //add button here
-        add = (Button) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String name,date,lastWater,lastFood,desc,foodSpin,waterSpin;
-                name = "" + plantName.getText();
 
                 List<Plant> plantList = db.getAll();
+                name = "" + plantName.getText();
+                date = "" + plantDate.getText();
+                lastWater = "" + lastWatered.getText();
+                lastFood = "" + lastFed.getText();
+                desc = "" + plantDescription.getText();
+                foodSpin = "" + foodIntervalSpin.getSelectedItem();
+                waterSpin = "" + waterIntervalSpin.getSelectedItem();
 
                 if(name.isEmpty())
                 {
@@ -199,49 +215,71 @@ public class PlantAddScreen extends AppCompatActivity {
                     toast.show();
                 }
                 else {
-                    boolean ok=true;
-                    for(Plant thisPlant:plantList)
-                    {
-                        //Log.d("URGENT",name + " " + thisPlant.getPlantName());
-                        if(thisPlant.getPlantName().equals(name))
-                        {
+                    if(!isEdit) {
+                        boolean ok = true;
+                        for (Plant thisPlant : plantList) {
+                            if (thisPlant.getPlantName().equals(name)) {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Name must be unique!";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                ok = false;
+                                break;
+                            }
+                        }
+                        if (ok) {
+                            if (date.isEmpty())
+                                date = "Unknown";
+                            if (lastWater.isEmpty())
+                                lastWater = "Unknown";
+                            if (lastFood.isEmpty())
+                                lastFood = "Unknown";
+                            if (desc.isEmpty())
+                                desc = "No notes";
+
+                            Plant plantAdd = new Plant(name, desc, date, lastWater, lastFood, image, foodSpin, waterSpin, favorite, lastWater, lastFood);
+                            db.save(plantAdd);
+
                             Context context = getApplicationContext();
-                            CharSequence text = "Name must be unique!";
+                            CharSequence text = "Added!";
                             int duration = Toast.LENGTH_SHORT;
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
-                            ok=false;
-                            break;
+                            db.close();
+                            setResult(RESULT_OK);
+                            finish();
                         }
                     }
-                    if(ok) {
-                        date = "" + plantDate.getText();
-                        lastWater = "" + lastWatered.getText();
-                        lastFood = "" + lastFed.getText();
-                        desc = "" + plantDescription.getText();
-                        foodSpin = "" + foodIntervalSpin.getSelectedItem();
-                        waterSpin = "" + waterIntervalSpin.getSelectedItem();
-
-                        if (date.isEmpty())
-                            date = "Unknown";
-                        if (lastWater.isEmpty())
-                            lastWater = "Unknown";
-                        if (lastFood.isEmpty())
-                            lastFood = "Unknown";
-                        if (desc.isEmpty())
-                            desc = "No notes";
-
-                        Plant plantAdd = new Plant(name, desc, date, lastWater, lastFood, image, foodSpin, waterSpin, favorite, lastWater, lastFood);
-                        db.save(plantAdd);
-
-                        Context context = getApplicationContext();
-                        CharSequence text = "Added!";
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        db.close();
-                        setResult(RESULT_OK);
-                        finish();
+                    else
+                    {
+                        boolean ok=true;
+                        for(Plant plant:plantList)
+                        {
+                            if(plant.getPlantName().equals(name) && plant.getID()!=editPlantID)
+                            {
+                                Context context = getApplicationContext();
+                                CharSequence text = "There's another plant with the same name!";
+                                int duration = Toast.LENGTH_SHORT;
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                ok = false;
+                                break;
+                            }
+                        }
+                        if(ok)
+                        {
+                            Plant plantEdited = new Plant(editPlantID,name, desc, date, lastWater, lastFood, image, foodSpin, waterSpin, favorite, lastWater, lastFood);
+                            db.update(plantEdited);
+                            db.close();
+                            Context context = getApplicationContext();
+                            CharSequence text = "Saved!";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                            setResult(RESULT_OK);
+                            finish();
+                        }
                     }
                 }
             }
