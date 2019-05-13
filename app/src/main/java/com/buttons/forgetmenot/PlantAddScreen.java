@@ -93,9 +93,11 @@ public class PlantAddScreen extends AppCompatActivity {
             plantDate.setText(plantToEdit.getPlantDate());
 
             image = plantToEdit.getImage();
-            Bitmap img = BitmapFactory.decodeByteArray(image,0,image.length);
-            imageButton.setImageBitmap(Bitmap.createScaledBitmap(img,(int)dipToPixels(this,120),(int)dipToPixels(this,120),false));
-
+            if(image!=null) {
+                Bitmap img = BitmapFactory.decodeByteArray(image, 0, image.length);
+                imageButton.setImageBitmap(Bitmap.createScaledBitmap(img, (int) dipToPixels(this, 120), (int) dipToPixels(this, 120), false));
+            }
+            
             String isFav = plantToEdit.getFavorite();
             if(isFav.equals("true"))
                 checkbox.setSelected(true);
