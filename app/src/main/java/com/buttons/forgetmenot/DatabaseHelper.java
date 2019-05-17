@@ -26,12 +26,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String key_favorite = "IsFavorite";
     private static final String key_waterHistory = "WaterHistory";
     private static final String key_foodHistory = "FoodHistory";
+    private static final String key_doFeed = "NeedsFeeding";
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + table_name + "(" + key_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +key_name +" TEXT,"+
                 key_desc +" TEXT,"+key_planted +" TEXT,"+key_watered +" TEXT,"+key_fed +" TEXT,"+key_image +" BLOB,"
-                +key_feedInterval +" TEXT,"+key_waterInterval +" TEXT,"+ key_favorite +" TEXT,"+ key_waterHistory +" TEXT," +key_foodHistory +" TEXT"+   ")";
+                +key_feedInterval +" TEXT,"+key_waterInterval +" TEXT,"+ key_favorite +" TEXT,"+ key_waterHistory +" TEXT," +key_foodHistory +" TEXT,"+
+                key_doFeed +" TEXT"+")";
         db.execSQL(createTable);
     }
 
@@ -94,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] args = {plantName};
         Cursor cursor = db.rawQuery(query,args);
         cursor.moveToFirst();
-        Plant toReturn = new Plant(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
+        Plant toReturn = new Plant(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12));
         cursor.close();
         db.close();
         return toReturn;
@@ -108,7 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
-                Plant currentPlant = new Plant(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11));
+                Plant currentPlant = new Plant(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getBlob(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12));
                 plantList.add(currentPlant);
                 cursor.moveToNext();
             }

@@ -12,12 +12,12 @@ public class Plant {
     private byte[] image;
     private String feedInterval;
     private String waterInterval;
-
     private String favorite;
     private String waterHistory;
     private String foodHistory;
+    private String doFeed;
 
-    public Plant(int ID,String plantName,String description,String plantDate,String lastWatered,String lastFed,byte[] image, String feedInterval, String waterInterval,String favorite, String waterHistory, String foodHistory)
+    public Plant(int ID,String plantName,String description,String plantDate,String lastWatered,String lastFed,byte[] image, String feedInterval, String waterInterval,String favorite, String waterHistory, String foodHistory,String doFeed)
     {
         this.ID=ID;
         this.plantDate=plantDate;
@@ -31,8 +31,9 @@ public class Plant {
         this.favorite=favorite;
         this.waterHistory=waterHistory;
         this.foodHistory=foodHistory;
+        this.doFeed=doFeed;
     }
-    public Plant(String plantName,String description,String plantDate,String lastWatered,String lastFed,byte[] image, String feedInterval, String waterInterval,String favorite, String waterHistory, String foodHistory)
+    public Plant(String plantName,String description,String plantDate,String lastWatered,String lastFed,byte[] image, String feedInterval, String waterInterval,String favorite, String waterHistory, String foodHistory,String doFeed)
     {
         this.plantDate=plantDate;
         this.plantName=plantName;
@@ -45,6 +46,7 @@ public class Plant {
         this.favorite=favorite;
         this.waterHistory=waterHistory;
         this.foodHistory=foodHistory;
+        this.doFeed=doFeed;
     }
 
     public int getID() {
@@ -156,5 +158,15 @@ public class Plant {
 
     public void setWaterHistory(String waterToAdd) {
         waterHistory += ","+waterToAdd;
+    }
+
+    public void setDoFeed(String doFeed)
+    {
+        this.doFeed=doFeed;
+    }
+
+    public String getDoFeed()
+    {
+        return doFeed;
     }
 }

@@ -42,7 +42,7 @@ public class PlantAddScreen extends AppCompatActivity {
     Button add,cancel;
     ImageButton imageButton;
     TextView plantName,plantDescription,plantDate,lastWatered,lastFed;
-    String favorite="false";
+    String favorite="false",needsFeeding="false";
     byte[] image;
     Spinner waterIntervalSpin, foodIntervalSpin;
     CheckBox checkbox;
@@ -240,7 +240,7 @@ public class PlantAddScreen extends AppCompatActivity {
                             if (desc.isEmpty())
                                 desc = "No notes";
 
-                            Plant plantAdd = new Plant(name, desc, date, lastWater, lastFood, image, foodSpin, waterSpin, favorite, lastWater, lastFood);
+                            Plant plantAdd = new Plant(name, desc, date, lastWater, lastFood, image, foodSpin, waterSpin, favorite, lastWater, lastFood,needsFeeding);
                             db.save(plantAdd);
 
                             Context context = getApplicationContext();
@@ -271,7 +271,7 @@ public class PlantAddScreen extends AppCompatActivity {
                         }
                         if(ok)
                         {
-                            Plant plantEdited = new Plant(editPlantID,name, desc, date, lastWater, lastFood, image, foodSpin, waterSpin, favorite, lastWater, lastFood);
+                            Plant plantEdited = new Plant(editPlantID,name, desc, date, lastWater, lastFood, image, foodSpin, waterSpin, favorite, lastWater, lastFood,needsFeeding);
                             db.update(plantEdited);
                             db.close();
                             Context context = getApplicationContext();
