@@ -39,9 +39,9 @@ public class NotificationHandler extends Worker {
     @Override
     public ListenableWorker.Result doWork() {
 
-        String title = getApplicationContext().getResources().getString(R.string.notificationTitleWater);
-        String text = getApplicationContext().getResources().getString(R.string.notificationTextWaterSample);
-        int id = 1;
+        String title = getInputData().getString(Constants.EXTRA_TITLE);
+        String text = getInputData().getString(Constants.EXTRA_TEXT);
+        int id = (int) getInputData().getLong(Constants.EXTRA_ID, 0);
 
         sendNotification(title, text, id);
         return Result.success();
@@ -69,7 +69,7 @@ public class NotificationHandler extends Worker {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true);
 
-        //Objects.requireNonNull(notificationManager).notify(id, notification.build());
+        Objects.requireNonNull(notificationManager).notify(id, notification.build());
     }
 }
 

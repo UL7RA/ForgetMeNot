@@ -36,22 +36,23 @@ public class MainScreen extends AppCompatActivity {
 
     DatabaseHelper db;
     static CardClick listener;
-    private static List<Plant> plantList;
     CardAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        /*
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             Intent sendToPermissions = new Intent(this,PermissionsScreen.class);
             startActivity(sendToPermissions);
         }
+        */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
         //render screen
         db = new DatabaseHelper(getApplicationContext());
+        List<Plant> plantList;
         plantList = db.getAll();
 
         if(plantList.isEmpty())
@@ -62,7 +63,8 @@ public class MainScreen extends AppCompatActivity {
             databaseEmptyText.setText(getString(R.string.nothing));
             databaseEmptyText.setTextSize(32);
             databaseEmptyText.setGravity(Gravity.CENTER);
-            ConstraintLayout.LayoutParams emptyTextParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.MATCH_PARENT);
+            ConstraintLayout.LayoutParams emptyTextParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.MATCH_PARENT);
             emptyTextParams.setMargins(32,128,32,128);
             databaseEmptyText.setLayoutParams(emptyTextParams);
             databaseEmptyText.setTextColor(Color.BLACK);

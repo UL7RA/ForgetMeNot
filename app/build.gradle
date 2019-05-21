@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.buttons.forgetmenot"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -31,6 +31,9 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation "android.arch.work:work-runtime:1.0.1"
+    implementation "android.arch.work:work-firebase:1.0.0-alpha11"
+    //Work
     implementation "android.arch.work:work-runtime:1.0.1"
     implementation "android.arch.work:work-firebase:1.0.0-alpha11"
 }
