@@ -22,12 +22,15 @@
     <string name="foodIcon">Food icon</string>
     <string name="waterIcon">Water icon</string>
     <string name="save">Save</string>
-    <string name="notificationTextWaterSample">Your Devil Ivy needs watering!</string>
-    <string name="notificationTitleWater">Time to water!</string>
-    <string name="notificationTitleFeeding">Time to fertilize!</string>
+
+    <string name="notificationTextWater">Time to water your</string>
+    <string name="notificationTitleWater">Watering time!</string>
+    <string name="notificationTitleFeeding">Fertilizing time!</string>
     <string name="notificationNotReady">Tomorrow</string>
     <string name="notificationWaterButton">Watered</string>
     <string name="notificationFoodButton">Fertilized</string>
+    <string name="channel_name">ForgetMeNot</string>
+    <string name="channel_description">Channel to transmit ForgetMeNot notifications</string>
 
     <string-array name="intervals">
         <item>1 day</item>
